@@ -1,5 +1,9 @@
 package algo_project;
 
+import jRAPL.EnergyDiff;
+import jRAPL.EnergyStats;
+import jRAPL.SyncEnergyMonitor;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,6 +17,13 @@ public class SortingAlgorithms {
         SortingAlgorithms sa = new SortingAlgorithms();
 
         int[] original = {5, 2, 9, 1, 5, 6};
+
+        // makes an object that tracks the energy usage
+        //SyncEnergyMonitor m = new SyncEnergyMonitor();
+        //m.activate();
+
+        // collects a sample of the energy usage before the work is done
+        //EnergyStats before = m.getSample();
 
         int[] arr1 = original.clone();
         sa.bubble_sort(arr1);
@@ -43,6 +54,19 @@ public class SortingAlgorithms {
         System.out.print("Counting Sort: ");
         printArray(sortedCounting);
 
+        // grabs a sample after the work is done
+        //EnergyStats after = m.getSample();
+
+        // calculates the difference between the two, and stops the tracker
+        //EnergyDiff difference = EnergyDiff.between(before, after);
+        //m.deactivate();
+
+        // prints out the jRAPL readings
+        // System.out.println(String.format(
+        //  "Used %.2f J for CPU, %.2f J for DRAM, %.2f J in total over %d milliseconds",
+        //  difference.getCore(), difference.getDram(), difference.getPackage(), difference.getTimeElapsed().getNano() / 1000000
+        // ));
+
         // NOTE: BEST CASE OF BUBBLE SORT IS O(n) but report says n^2
         // ---------- Complexity Table ----------
         System.out.println("\nAlgorithm           Best Case     Worst Case");
@@ -63,7 +87,7 @@ public class SortingAlgorithms {
     public void bubble_sort(int[] array) {
         int n = array.length;
         for (int i = 0; i < n-1; i++) {
-            for (int j = 0; j < n-i-2; j++) {
+            for (int j = 0; j < n-i-1; j++) {
                 if (array[j] > array[j+1]) { // if current element is greater than next element, swap them
                     int temp = array[j];
                     array[j] = array[j+1];
