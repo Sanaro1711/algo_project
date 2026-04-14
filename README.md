@@ -5,6 +5,9 @@
 `SortingAlgorithms/src/algo_project/SortingAlgorithms.java` is the code you need to run.  
 It requires some setting up before you can actually run it. See `SortingAlgorithms/README.md`.
 
+**IMPORTANT: Linux is required to run the code in this project.**  
+It is recommended to use Ubuntu, as that was the OS used in the research paper.
+
 ## Research Resources
 
 https://greencompute.uk/Measurement/RAPL - RAPL explanation

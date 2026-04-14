@@ -1,8 +1,8 @@
 # README
 
-This directory contains some sample code for the sorting algorithms and jRAPL.  
-The main program is `src/algo_project/SortingAlgorithms.java`, where the main sorting algorithms are run on a sample array, and the used
-energy is measured using jRAPL.
+This directory contains some sample code for the sorting algorithms and jRAPL, together with the CSVs used in the project.  
+The sample code is found in `SampleCode.java`. You can use it to test reading CSVs & using jRAPL on your machine.  
+Before you can run it, you need to follow the instructions below.
 
 ## jRAPL Compatibility
 
@@ -16,6 +16,9 @@ MICRO_ARCHITECTURE_NAME: KABYLAKE
 If `MICRO_ARCHITECTURE_NAME` says something like `UNDEFINED_ARCHITECTURE`, jRAPL is not compatible with your machine.
 
 ## Running the program
+
+**IMPORTANT**: check that you have Java Runtime Environment (JRE) or JDK installed on your machine, before doing anything.  
+On Ubuntu, you can see the packages you can use by typing `java` into your terminal.  
 
 ### Setting up
 

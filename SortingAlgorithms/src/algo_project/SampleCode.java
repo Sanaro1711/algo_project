@@ -1,8 +1,8 @@
 package algo_project;
 
-import jRAPL.EnergyDiff;
-import jRAPL.EnergyStats;
 import jRAPL.SyncEnergyMonitor;
+import jRAPL.EnergyStats;
+import jRAPL.EnergyDiff;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SortingAlgorithms {
+public class SampleCode {
     public static final String COMMA_DELIMITER = ",";
 
     public static void main(String[] args) {
-        SortingAlgorithms sa = new SortingAlgorithms();
+        SampleCode sa = new SampleCode();
 
         int[] original = {5, 2, 9, 1, 5, 6};
 
@@ -84,7 +84,7 @@ public class SortingAlgorithms {
         System.out.println();
     }
 
-    public void bubble_sort(int[] array) {
+    public static void bubble_sort(int[] array) {
         int n = array.length;
         for (int i = 0; i < n-1; i++) {
             for (int j = 0; j < n-i-1; j++) {
@@ -97,7 +97,7 @@ public class SortingAlgorithms {
         }
     }
 
-    public int[] counting_sort(int[] array) {
+    public static int[] counting_sort(int[] array) {
         int n = array.length;
         if (n == 0) {
             return new int[0];
@@ -136,7 +136,7 @@ public class SortingAlgorithms {
         return ans;
     }
 
-    public void quick_sort(int[] arr, int low, int high) {
+    public static void quick_sort(int[] arr, int low, int high) {
         if (low >= high) {
             return;
         }
@@ -147,7 +147,7 @@ public class SortingAlgorithms {
         }
     }
 
-    public int partition(int[] arr, int low, int high) {
+    public static int partition(int[] arr, int low, int high) {
         int pivot = arr[high];
         int i = low - 1;
         for (int j = low; j < high; j++) {
@@ -168,7 +168,7 @@ public class SortingAlgorithms {
         return i + 1;
     }
 
-    public void merge_sort(int[] arr, int l, int r) {
+    public static void merge_sort(int[] arr, int l, int r) {
         if (l >= r) {
             return;
         }
@@ -184,7 +184,7 @@ public class SortingAlgorithms {
         }
     }
 
-    public void merge(int[] arr, int l, int mid, int r) {
+    public static void merge(int[] arr, int l, int mid, int r) {
 
         int n1 = mid-l+1; // mid element is included in left array
         int n2 = r-mid;
