@@ -15,7 +15,7 @@ public class DataGenerator {
     // it produces 400 CSV files for each algorithm, containing the input size & energy used as x & y coordinates
     // this is to simplify graphing for later
 
-
+    // WARNING: there is a lot of copied code ahead
 
 
     public static void main() throws IOException {
@@ -25,7 +25,7 @@ public class DataGenerator {
         monitor.activate();
 
         // stores the path for the input & output CSVs
-        // TODO: CHANGE THESE TO GET THE CODE RUNNING!!!
+        // CHANGE THESE TO GET THE CODE RUNNING!!!
         String inputPath = "D:/ucd/comp20290/algo_project/SortingAlgorithms/src/algo_project/CSVs";
         String outputPath = "D:/ucd/comp20290/algo_project/SortingAlgorithms/src/algo_project/Output";
 
@@ -44,7 +44,7 @@ public class DataGenerator {
             int initSize = 25000;
 
             // sets up the file & output for the iteration
-            File output = new File(outputPath + "/BubbleSort/Random/" + i + ".csv");
+            File output = new File(outputPath + "/BubbleSort/Reverse/" + i + ".csv");
             FileWriter writer = new FileWriter(output);
 
             // cycles through the sizes
@@ -56,8 +56,11 @@ public class DataGenerator {
                 SampleCode.bubble_sort(array);
                 EnergyStats after = monitor.getSample();
 
+                // gets the difference between the two samples
+                EnergyDiff diff = EnergyDiff.between(before, after);
+
                 // gets the CPU usage
-                double energy = after.getCore();
+                double energy = diff.getCore();
                 // stores the size & CPU usage as
                 writer.write(initSize + "," + energy + "\n");
 
@@ -69,7 +72,7 @@ public class DataGenerator {
 
         // sorted file
 
-        int[] sorted = readCSV(inputPath + "sorted.csv", 500000);
+        int[] sorted = readCSV(inputPath + "/sorted.csv", 500000);
 
         for(int i = 0; i < 400; i++) {
             // 25k, 50k, 75k, 100k, 200k, 300k, 400k, 500k
@@ -78,7 +81,7 @@ public class DataGenerator {
             int initSize = 25000;
 
             // sets up the file & output for the iteration
-            File output = new File(outputPath + "BubbleSort/Sorted/" + i + ".csv");
+            File output = new File(outputPath + "/BubbleSort/Sorted/" + i + ".csv");
             FileWriter writer = new FileWriter(output);
 
             // cycles through the sizes
@@ -90,9 +93,12 @@ public class DataGenerator {
                 SampleCode.bubble_sort(array);
                 EnergyStats after = monitor.getSample();
 
+                // gets the difference between the two samples
+                EnergyDiff diff = EnergyDiff.between(before, after);
+
                 // gets the CPU usage
-                double energy = after.getCore();
-                // stores the size & CPU usage as
+                double energy = diff.getCore();
+                // stores the size & CPU usage as a CSV entry
                 writer.write(initSize + "," + energy + "\n");
 
                 // increases the size
@@ -109,19 +115,19 @@ public class DataGenerator {
 
             for(int i = 0; i < 40; i++) {
                 int initSize = 25000;
-                File output = new File(outputPath + "BubbleSort/Random/" + x + "/" + i + ".csv");
+                File output = new File(outputPath + "/BubbleSort/Random/" + (x+1) + "/" + i + ".csv");
                 FileWriter writer = new FileWriter(output);
 
                 for(int j = 0; j < 8; j++) {
                     // makes a copy of the desired size
-                    int[] array1 = Arrays.copyOf(sorted, initSize);
+                    int[] array1 = Arrays.copyOf(array, initSize);
                     EnergyStats before = monitor.getSample();
                     SampleCode.bubble_sort(array1);
                     EnergyStats after = monitor.getSample();
 
-                    // gets the CPU usage
-                    double energy = after.getCore();
-                    // stores the size & CPU usage as
+                    EnergyDiff diff = EnergyDiff.between(before, after);
+                    double energy = diff.getCore();
+                    // stores the size & CPU usage as a CSV entry
                     writer.write(initSize + "," + energy + "\n");
 
                     // increases the size
@@ -132,19 +138,258 @@ public class DataGenerator {
         }
 
 
-        // MERGE SORT
 
-        for(int i = 0; i < 400; i++) {
+
+
+        // MERGE SORT
+        // Alternating elements, 1x30
+        // Sorted, 1x30
+        // Randomly sorted, 10x3
+
+        // Alternating elements
+
+        int[] alternating =  readCSV(inputPath + "/alternating.csv", 1000000);
+
+        for(int i = 0; i < 30; i++) {
+
+            int initSize = 25000;
+            File output = new File(outputPath + "/MergeSort/Alternating/" + i + ".csv");
+            FileWriter writer = new FileWriter(output);
+
+            // cycles thru the sizes, up to 1m
+            for(int j = 0; j < 13; j++) {
+                // 25k, 50k, 75k|, 100k, 200k, 300k, 400k, 500k|, 600k, 700k, 800k, 900k, 1m
+
+                // makes a copy of the desired size
+                int[] array1 = Arrays.copyOf(alternating, initSize);
+                EnergyStats before = monitor.getSample();
+                SampleCode.merge_sort(array1, 0, array1.length);
+                EnergyStats after = monitor.getSample();
+
+                EnergyDiff diff = EnergyDiff.between(before, after);
+                double energy = diff.getCore();
+                // stores the size & CPU usage as a CSV entry
+                writer.write(initSize + "," + energy + "\n");
+
+                // increases the size
+                if(j < 3) {initSize += 25000;}
+                else {initSize += 100000;}
+            }
 
         }
+
+        // Sorted
+        int[] sortedArray =  readCSV(inputPath + "/sorted.csv", 1000000);
+        for(int i = 0; i < 30; i++) {
+
+            int initSize = 25000;
+            File output = new File(outputPath + "/MergeSort/Sorted/" + i + ".csv");
+            FileWriter writer = new FileWriter(output);
+
+            // cycles thru the sizes
+            for(int j = 0; j < 13; j++) {
+
+                // makes a copy of the desired size
+                int[] array1 = Arrays.copyOf(sortedArray, initSize);
+                EnergyStats before = monitor.getSample();
+                SampleCode.merge_sort(array1, 0, array1.length);
+                EnergyStats after = monitor.getSample();
+
+                EnergyDiff diff = EnergyDiff.between(before, after);
+                double energy = diff.getCore();
+                // stores the size & CPU usage as a CSV entry
+                writer.write(initSize + "," + energy + "\n");
+
+                if(j < 3) {initSize += 25000;}
+                else {initSize += 100000;}
+            }
+
+        }
+
+        // Randomly sorted
+        for(int x = 0; x < 10; x++) {
+            int[] random = readCSV(inputPath + "/random_" + (x+1) + ".csv", 1000000);
+            for(int i = 0; i < 40; i++) {
+                int initSize = 25000;
+                File output = new File(outputPath + "/MergeSort/Random/" + (x+1) + "/" + i + ".csv");
+                FileWriter writer = new FileWriter(output);
+
+                // cycles thru the sizes
+                for(int j = 0; j < 13; j++) {
+
+                    // makes a copy of the desired size
+                    int[] array1 = Arrays.copyOf(random, initSize);
+                    EnergyStats before = monitor.getSample();
+                    SampleCode.merge_sort(array1, 0, array1.length);
+                    EnergyStats after = monitor.getSample();
+
+                    EnergyDiff diff = EnergyDiff.between(before, after);
+                    double energy = diff.getCore();
+                    // stores the size & CPU usage as a CSV entry
+                    writer.write(initSize + "," + energy + "\n");
+
+                    if(j < 3) {initSize += 25000;}
+                    else {initSize += 100000;}
+                }
+            }
+        }
+
+
+
+
 
 
         // QUICK SORT
-        for(int i = 0; i < 400; i++) {
+        // Reverse-sorted, 1x30
+        // Evenly partitioned, 1x30
+        // Randomly sorted, 10x3
+
+        // Reverse-sorted
+
+        int[] reversed = readCSV(inputPath + "/sorted_reverse.csv", 1000000);
+
+        for(int i = 0; i < 30; i++) {
+            int  initSize = 25000;
+            File output = new File(outputPath + "/QuickSort/Reverse/" + i + ".csv");
+            FileWriter writer = new FileWriter(output);
+
+            // cycles thru the sizes, only up to 200k
+            for(int j = 0; j < 5; j++) {
+                // 25k, 50k, 75k, 100k, 200k
+
+                // makes a copy of the desired size
+                int[] array1 = Arrays.copyOf(reversed, initSize);
+                EnergyStats before = monitor.getSample();
+                SampleCode.quick_sort(array1, 0, array1.length);
+                EnergyStats after = monitor.getSample();
+
+                EnergyDiff diff = EnergyDiff.between(before, after);
+                double energy = diff.getCore();
+                // stores the size & CPU usage as a CSV entry
+                writer.write(initSize + "," + energy + "\n");
+
+                if(j < 3) {initSize += 25000;}
+                else {initSize += 100000;}
+            }
+        }
+
+        // Evenly partitioned
+        int[] evenlyPartitioned = readCSV(inputPath + "/even_partitioned.csv", 1000000);
+
+        for(int i = 0; i < 30; i++) {
+            int  initSize = 25000;
+            File output = new File(outputPath + "/QuickSort/EvenPartition/" + i + ".csv");
+            FileWriter writer = new FileWriter(output);
+
+            // cycles thru the sizes
+            for(int j = 0; j < 13; j++) {
+                // makes a copy of the desired size
+                int[] array1 = Arrays.copyOf(evenlyPartitioned, initSize);
+                EnergyStats before = monitor.getSample();
+                SampleCode.quick_sort(array1, 0, array1.length);
+                EnergyStats after = monitor.getSample();
+
+                EnergyDiff diff = EnergyDiff.between(before, after);
+                double energy = diff.getCore();
+                // stores the size & CPU usage as a CSV entry
+                writer.write(initSize + "," + energy + "\n");
+
+                if(j < 3) {initSize += 25000;}
+                else {initSize += 100000;}
+            }
+        }
+
+        // Randomly sorted
+        for(int x = 0; x < 10; x++) {
+
+            int[] random =  readCSV(inputPath + "/random_" + (x+1) + ".csv", 1000000);
+
+            for(int i = 0; i < 3; i++) {
+                int  initSize = 25000;
+                File output = new File(outputPath + "/QuickSort/Random/" + (x+1) + "/" + i + ".csv");
+                FileWriter writer = new FileWriter(output);
+
+                // cycles thru the sizes
+                for(int j = 0; j < 13; j++) {
+                    // makes a copy of the desired size
+                    int[] array1 = Arrays.copyOf(random, initSize);
+                    EnergyStats before = monitor.getSample();
+                    SampleCode.quick_sort(array1, 0, array1.length);
+                    EnergyStats after = monitor.getSample();
+
+                    EnergyDiff diff = EnergyDiff.between(before, after);
+                    double energy = diff.getCore();
+                    // stores the size & CPU usage as a CSV entry
+                    writer.write(initSize + "," + energy + "\n");
+
+                    if(j < 3) {initSize += 25000;}
+                    else {initSize += 100000;}
+                }
+            }
 
         }
 
+
+
+
+        // COUNTING SORT
+        // Randomly sorted, big k - 1x30
+        // Randomly sorted, small k - 1x30
+
+        // Big K
+        int[] bigK = readCSV(inputPath + "/random_big_k.csv", 1000000);
+        for(int i = 0; i < 30; i++) {
+            int  initSize = 25000;
+            File output = new File(outputPath + "/CountingSort/Random_BigK/" + i + ".csv");
+            FileWriter writer = new FileWriter(output);
+
+            // cycles thru the sizes
+            for(int j = 0; j < 13; j++) {
+                // makes a copy of the desired size
+                int[] array1 = Arrays.copyOf(bigK, initSize);
+                EnergyStats before = monitor.getSample();
+                int[] countingArray = SampleCode.counting_sort(array1);
+                EnergyStats after = monitor.getSample();
+
+                EnergyDiff diff = EnergyDiff.between(before, after);
+                double energy = diff.getCore();
+                // stores the size & CPU usage as a CSV entry
+                writer.write(initSize + "," + energy + "\n");
+
+                if(j < 3) {initSize += 25000;}
+                else {initSize += 100000;}
+            }
+        }
+
+        // Small K
+        int[] smallK =  readCSV(inputPath + "/random_small_k.csv", 1000000);
+        for(int i = 0; i < 30; i++) {
+            int  initSize = 25000;
+            File output = new File(outputPath + "/CountingSort/Random_SmallK/" + i + ".csv");
+            FileWriter writer = new FileWriter(output);
+
+            // cycles thru the sizes
+            for(int j = 0; j < 13; j++) {
+                // makes a copy of the desired size
+                int[] array1 = Arrays.copyOf(smallK, initSize);
+                EnergyStats before = monitor.getSample();
+                int[] countingArray = SampleCode.counting_sort(array1);
+                EnergyStats after = monitor.getSample();
+
+                EnergyDiff diff = EnergyDiff.between(before, after);
+                double energy = diff.getCore();
+                // stores the size & CPU usage as a CSV entry
+                writer.write(initSize + "," + energy + "\n");
+
+                if(j < 3) {initSize += 25000;}
+                else {initSize += 100000;}
+            }
+        }
+
+
+
     }
+
 
 
     public static int[] readCSV(String path, int size) throws IOException {
