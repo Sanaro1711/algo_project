@@ -1,20 +1,21 @@
 package algo_project;
 
-import jRAPL.SyncEnergyMonitor;
-import jRAPL.EnergyStats;
-import jRAPL.EnergyDiff;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SampleCode {
+
+// This class contains the code for the sorting algorithms, as well as sample code to test them in the main method.
+// The jRAPL commands have been commented out, to ensure compatibility with all machines.
+// You can test jRAPL by uncommenting lines 23-24, 27, 59, 62-63, and 66-69.
+
+public class SortingAlgorithms {
     public static final String COMMA_DELIMITER = ",";
 
     public static void main(String[] args) {
-        SampleCode sa = new SampleCode();
+        SortingAlgorithms sa = new SortingAlgorithms();
 
         int[] original = {5, 2, 9, 1, 5, 6};
 

@@ -10,13 +10,17 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+// this class is responsible for generating the data
+// it produces the required number of CSV files for each algorithm,
+// containing the input size & energy used as x & y coordinates
+// this is to simplify graphing for later, where each CSV file can be used to plot an individual line
+
 public class DataGenerator {
-    // this class is responsible for generating the data
-    // it produces 400 CSV files for each algorithm, containing the input size & energy used as x & y coordinates
-    // this is to simplify graphing for later
 
-    // WARNING: there is a lot of copied code ahead
+    // IMPORTANT: to get this code running, CHANGE THE FILE PATHS in lines 36 and 37
+    // these are absolute file paths, and they will vary for each machine
 
+    // WARNING: there is a lot of recycled code ahead
 
     public static void main() throws IOException {
 
@@ -24,10 +28,16 @@ public class DataGenerator {
         SyncEnergyMonitor monitor = new SyncEnergyMonitor();
         monitor.activate();
 
+        // |
+        // v
+
         // stores the path for the input & output CSVs
         // CHANGE THESE TO GET THE CODE RUNNING!!!
         String inputPath = "D:/ucd/comp20290/algo_project/SortingAlgorithms/src/algo_project/CSVs";
         String outputPath = "D:/ucd/comp20290/algo_project/SortingAlgorithms/src/algo_project/Output";
+
+        // ^
+        // |
 
         // BUBBLE SORT
         // reverse-sorted, 1x400
@@ -53,7 +63,7 @@ public class DataGenerator {
                 // makes a copy of the desired size
                 int[] array = Arrays.copyOf(reverseSorted, initSize);
                 EnergyStats before = monitor.getSample();
-                SampleCode.bubble_sort(array);
+                SortingAlgorithms.bubble_sort(array);
                 EnergyStats after = monitor.getSample();
 
                 // gets the difference between the two samples
@@ -90,7 +100,7 @@ public class DataGenerator {
                 // makes a copy of the desired size
                 int[] array = Arrays.copyOf(sorted, initSize);
                 EnergyStats before = monitor.getSample();
-                SampleCode.bubble_sort(array);
+                SortingAlgorithms.bubble_sort(array);
                 EnergyStats after = monitor.getSample();
 
                 // gets the difference between the two samples
@@ -122,7 +132,7 @@ public class DataGenerator {
                     // makes a copy of the desired size
                     int[] array1 = Arrays.copyOf(array, initSize);
                     EnergyStats before = monitor.getSample();
-                    SampleCode.bubble_sort(array1);
+                    SortingAlgorithms.bubble_sort(array1);
                     EnergyStats after = monitor.getSample();
 
                     EnergyDiff diff = EnergyDiff.between(before, after);
@@ -163,7 +173,7 @@ public class DataGenerator {
                 // makes a copy of the desired size
                 int[] array1 = Arrays.copyOf(alternating, initSize);
                 EnergyStats before = monitor.getSample();
-                SampleCode.merge_sort(array1, 0, array1.length);
+                SortingAlgorithms.merge_sort(array1, 0, array1.length);
                 EnergyStats after = monitor.getSample();
 
                 EnergyDiff diff = EnergyDiff.between(before, after);
@@ -192,7 +202,7 @@ public class DataGenerator {
                 // makes a copy of the desired size
                 int[] array1 = Arrays.copyOf(sortedArray, initSize);
                 EnergyStats before = monitor.getSample();
-                SampleCode.merge_sort(array1, 0, array1.length);
+                SortingAlgorithms.merge_sort(array1, 0, array1.length);
                 EnergyStats after = monitor.getSample();
 
                 EnergyDiff diff = EnergyDiff.between(before, after);
@@ -220,7 +230,7 @@ public class DataGenerator {
                     // makes a copy of the desired size
                     int[] array1 = Arrays.copyOf(random, initSize);
                     EnergyStats before = monitor.getSample();
-                    SampleCode.merge_sort(array1, 0, array1.length);
+                    SortingAlgorithms.merge_sort(array1, 0, array1.length);
                     EnergyStats after = monitor.getSample();
 
                     EnergyDiff diff = EnergyDiff.between(before, after);
@@ -260,7 +270,7 @@ public class DataGenerator {
                 // makes a copy of the desired size
                 int[] array1 = Arrays.copyOf(reversed, initSize);
                 EnergyStats before = monitor.getSample();
-                SampleCode.quick_sort(array1, 0, array1.length);
+                SortingAlgorithms.quick_sort(array1, 0, array1.length);
                 EnergyStats after = monitor.getSample();
 
                 EnergyDiff diff = EnergyDiff.between(before, after);
@@ -286,7 +296,7 @@ public class DataGenerator {
                 // makes a copy of the desired size
                 int[] array1 = Arrays.copyOf(evenlyPartitioned, initSize);
                 EnergyStats before = monitor.getSample();
-                SampleCode.quick_sort(array1, 0, array1.length);
+                SortingAlgorithms.quick_sort(array1, 0, array1.length);
                 EnergyStats after = monitor.getSample();
 
                 EnergyDiff diff = EnergyDiff.between(before, after);
@@ -314,7 +324,7 @@ public class DataGenerator {
                     // makes a copy of the desired size
                     int[] array1 = Arrays.copyOf(random, initSize);
                     EnergyStats before = monitor.getSample();
-                    SampleCode.quick_sort(array1, 0, array1.length);
+                    SortingAlgorithms.quick_sort(array1, 0, array1.length);
                     EnergyStats after = monitor.getSample();
 
                     EnergyDiff diff = EnergyDiff.between(before, after);
@@ -348,7 +358,7 @@ public class DataGenerator {
                 // makes a copy of the desired size
                 int[] array1 = Arrays.copyOf(bigK, initSize);
                 EnergyStats before = monitor.getSample();
-                int[] countingArray = SampleCode.counting_sort(array1);
+                int[] countingArray = SortingAlgorithms.counting_sort(array1);
                 EnergyStats after = monitor.getSample();
 
                 EnergyDiff diff = EnergyDiff.between(before, after);
@@ -373,7 +383,7 @@ public class DataGenerator {
                 // makes a copy of the desired size
                 int[] array1 = Arrays.copyOf(smallK, initSize);
                 EnergyStats before = monitor.getSample();
-                int[] countingArray = SampleCode.counting_sort(array1);
+                int[] countingArray = SortingAlgorithms.counting_sort(array1);
                 EnergyStats after = monitor.getSample();
 
                 EnergyDiff diff = EnergyDiff.between(before, after);
@@ -391,7 +401,7 @@ public class DataGenerator {
     }
 
 
-
+    // a method for reading CSV files into an array
     public static int[] readCSV(String path, int size) throws IOException {
         int[] output = new int[size];
         File file = new File(path);
