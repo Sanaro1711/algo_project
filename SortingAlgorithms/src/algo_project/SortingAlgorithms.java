@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -250,5 +251,71 @@ public class SortingAlgorithms {
             result[i] = column.get(i);
         }
         return result;
+    }
+
+    // functions used to get time usage
+
+    public long timeBubbleSort(String csvPath) {
+        int[] arr = readCsv(csvPath);
+        long start = System.nanoTime();
+        bubble_sort(arr);
+        long end = System.nanoTime();
+        return end - start;
+    }
+
+    public long timeCountingSort(String csvPath) {
+        int[] arr = readCsv(csvPath);
+        long start = System.nanoTime();
+        counting_sort(arr);
+        long end = System.nanoTime();
+        return end - start;
+    }
+
+    public long timeQuickSort(String csvPath) {
+        int[] arr = readCsv(csvPath);
+        long start = System.nanoTime();
+        quick_sort(arr, 0, arr.length - 1);
+        long end = System.nanoTime();
+        return end - start;
+    }
+
+    public long timeMergeSort(String csvPath) {
+        int[] arr = readCsv(csvPath);
+        long start = System.nanoTime();
+        merge_sort(arr, 0, arr.length - 1);
+        long end = System.nanoTime();
+        return end - start;
+    }
+    public double timeBubbleSortSlice(int[] fullArray, int size) {
+        int[] arr = Arrays.copyOfRange(fullArray, 0, size);
+        long start = System.nanoTime();
+        bubble_sort(arr);
+        return (System.nanoTime() - start) / 1_000_000.0;
+    }
+
+    public double timeMergeSortSlice(int[] fullArray, int size) {
+        int[] arr = Arrays.copyOfRange(fullArray, 0, size);
+        long start = System.nanoTime();
+        merge_sort(arr, 0, arr.length - 1);
+        return (System.nanoTime() - start) / 1_000_000.0;
+    }
+
+    public double timeQuickSortSlice(int[] fullArray, int size) {
+        int[] arr = Arrays.copyOfRange(fullArray, 0, size);
+        long start = System.nanoTime();
+        quick_sort(arr, 0, arr.length - 1);
+        return (System.nanoTime() - start) / 1_000_000.0;
+    }
+
+    public double timeCountingSortSlice(int[] fullArray, int size) {
+        int[] arr = Arrays.copyOfRange(fullArray, 0, size);
+        int max = Arrays.stream(arr).max().getAsInt();
+        if (max > 100_000_000) {
+            System.out.println("  Counting Sort skipped (max value " + max + " too large)");
+            return -1.0;
+        }
+        long start = System.nanoTime();
+        counting_sort(arr);
+        return (System.nanoTime() - start) / 1_000_000.0;
     }
 }
