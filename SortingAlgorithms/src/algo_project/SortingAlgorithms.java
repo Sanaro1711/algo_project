@@ -73,7 +73,7 @@ public class SortingAlgorithms {
         // ---------- Complexity Table ----------
         System.out.println("\nAlgorithm           Best Case     Worst Case");
         System.out.println("------------------------------------------------");
-        System.out.println("Bubble Sort         O(n)          O(n^2)");
+        System.out.println("Bubble Sort         O(n^2)          O(n^2)");
         System.out.println("Quick Sort          O(n log n)    O(n^2)");
         System.out.println("Merge Sort          O(n log n)    O(n log n)");
         System.out.println("Counting Sort       O(n+k)        O(n+k)"); // n = size, k = max value

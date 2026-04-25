@@ -90,4 +90,10 @@ This is mainly because of Bubble Sort taking a really long time to sort with lar
 After the program has finished running, you can run the Python script `plotter.py`, and see the new results.  
 The script will put the graphs in the same directory that it's located in, `/SortingAlgorithms/src/algo_project/`. Hence, you can differentiate & compare the 2 sets of results.
 
+## Test cases
+
+To run test cases, you may have to download JUnit.
+
+But here is a picture of all test cases running and passing:
+![img.png](img.png)
 
